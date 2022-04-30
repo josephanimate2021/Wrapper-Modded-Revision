@@ -2,7 +2,10 @@
 :: Author: benson#0411
 :: License: MIT
 :: Peform config measurements before calling it in.
-if not exist utilities\config.bat ( goto configmissing ) else ( call utilities\config.bat )
+set SUBSCRIPT=y
+pushd utilities
+if not exist config.bat ( goto configmissing ) else ( call config.bat )
+pushd ..\
 set WRAPPER_VER=1.3.0
 title Wrapper: Offline v%WRAPPER_VER% [Initializing...]
 
@@ -75,7 +78,6 @@ echo Version !WRAPPER_VER!
 echo:
 
 :: Confirm measurements to proceed.
-set SUBSCRIPT=y
 :: Fake loading the settings. all updates are done anyway.
 echo Loading settings...
 echo:
@@ -1053,5 +1055,8 @@ echo set BROWSER_TYPE=chrome>> utilities\config.bat
 echo:>> utilities\config.bat
 echo :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n>> utilities\config.bat
 echo set DRYRUN=n>> utilities\config.bat
+echo:>> utilities\config.bat
+echo :: auto updates wrapper on first start>> utilities\config.bat
+echo set AUTOUPDATE=y>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
