@@ -9,7 +9,6 @@ utilities/import_these/*
 utilities/grounded_messages/*
 utilities/config.bat
 utilities/originalcfname.txt
-utilities/ungoogled-chromium/*
 server/characters/*
 server/characters/characters.zip
 .DS_Store
