@@ -1,6 +1,8 @@
 :: Wrapper: Offline Launcher
 :: Author: benson#0411
 :: License: MIT
+:: Peform config measurements before calling it in.
+if not exist utilities\config.bat ( goto configmissing ) else ( call utilities\config.bat )
 set WRAPPER_VER=1.3.0
 title Wrapper: Offline v%WRAPPER_VER% [Initializing...]
 
@@ -74,9 +76,8 @@ echo:
 
 :: Confirm measurements to proceed.
 set SUBSCRIPT=y
+:: Fake loading the settings. all updates are done anyway.
 echo Loading settings...
-if not exist utilities\config.bat ( goto configmissing )
-call utilities\config.bat
 echo:
 if !VERBOSEWRAPPER!==y ( echo Verbose mode activated. && echo:)
 goto configavailable
