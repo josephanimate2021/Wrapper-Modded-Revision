@@ -4,14 +4,14 @@
 
 :: Opens this file in Notepad when run
 setlocal
-if "%SUBSCRIPT%"=="" ( pushd "%USERPROFILE%\Downloads\Wrapper-Modded-Revision\utilities" & start notepad.exe config.bat & exit )
+if "%SUBSCRIPT%"=="" ( start notepad.exe config.bat & exit )
 endlocal
 
 :: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n
-set VERBOSEWRAPPER=y
+set VERBOSEWRAPPER=n
 
 :: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: n
-set SKIPCHECKDEPENDS=y
+set SKIPCHECKDEPENDS=n
 
 :: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: n
 set SKIPDEPENDINSTALL=n
@@ -30,5 +30,6 @@ set BROWSER_TYPE=chrome
 
 :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n
 set DRYRUN=n
+
+:: auto updates wrapper on first start
 set AUTOUPDATE=y
-set RPC=y
