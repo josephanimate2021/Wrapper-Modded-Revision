@@ -1,6 +1,8 @@
 :: Wrapper: Offline Launcher
 :: Author: benson#0411
 :: License: MIT
+:: Lets variables work or something idk im not a nerd
+SETLOCAL ENABLEDELAYEDEXPANSION
 :: Peform config measurements before calling it in.
 set SUBSCRIPT=y
 pushd utilities
@@ -38,9 +40,6 @@ if !AUTOUPDATE!==y (
 	PING -n 3 127.0.0.1>nul
 	cls
 )
-
-:: Lets variables work or something idk im not a nerd
-SETLOCAL ENABLEDELAYEDEXPANSION
 
 :: Make sure we're starting in the correct folder, and that it worked (otherwise things would go horribly wrong)
 pushd "%~dp0"
