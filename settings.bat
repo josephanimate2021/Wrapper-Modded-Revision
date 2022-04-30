@@ -115,9 +115,11 @@ if !RPC!==y (
 ) else ( 
 	echo ^(8^) Discord rich prescence is[91m OFF [0m
 )
-:: Character solid archive
-if exist "server\characters\characters.zip" (
-	echo ^(9^) Original LVM Character IDs are[91m OFF [0m
+:: Change Logo And Favicon
+if exist "wrapper\pages\img\modded-logo.svg" (
+        echo ^(9^) Both The Modded Logo And Favicon Are[91m OFF [0m
+) else (
+        echo ^(9^) Both The Modded Logo And Favicon Are[92m ON [0m
 )
 :: Dev options
 :: These are really specific options that no casual user would ever really need
@@ -265,16 +267,13 @@ if "!choice!"=="?8" (
     echo when you're using it on Discord.
 	goto reaskoptionscreen
 )
-:: Character solid archive
-if exist "server\characters\characters.zip" (
-	if "!choice!"=="9" goto extractchars
-	if "!choice!"=="?9" (
-		echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
-		echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
-		echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
-		echo you can extract them here. They will still be compressed, just in separate files to be usable.
-		goto reaskoptionscreen
-	)
+:: Change Logo And Favicon
+if "!choice!"=="9" goto extractchars
+if "!choice!"=="?9" (
+	echo When first getting Wrapper: Offline, the revison logo will be used by default.
+	echo if you want this thing modded, you may turn this feature on.
+	echo if you don't want to, it's fine. the modded version of wrapper offline is coming soon anyways.
+	goto reaskoptionscreen
 )
 :: Dev options
 if /i "!choice!"=="masterkey" (
@@ -516,32 +515,27 @@ if !RPC!==n (
 )
 goto toggleoption
 
-::::::::::::::::::::::::
-:: Extract Characters ::
-::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::
+:: Change Wrapper Logo And Favicon ::
+:::::::::::::::::::::::::::::::::::::
 :extractchars
-if exist "server\characters\characters.zip" (
-	echo Are you sure you wish to enable original LVM character IDs?
-	echo This will take a while, depending on your computer.
-	echo Characters will still be compressed, just put into separate usable files.
-	echo Press Y to do it, press N to not do it.
-	echo:
-	:replaceaskretry
-	set /p REPLACECHOICE= Response:
-	echo:
-	if not '!replacechoice!'=='' set replacechoice=%replacechoice:~0,1%
-	if /i "!replacechoice!"=="0" goto end
-	if /i "!replacechoice!"=="y" goto startextractchars
-	if /i "!replacechoice!"=="n" goto optionscreen
-	echo You must answer Yes or No. && goto replaceaskretry
-	
-	:startextractchars
-	echo Extracting characters...
-	echo Please do not close this window!
-	echo It's likely not frozen, it just takes a while.
-	echo:
-	utilities\7za.exe e server\characters\characters.zip -y -o server\characters
-	del /q server\characters\characters.zip
+pushd wrapper\pages\img
+:: Change Logo
+if exist modded-logo.svg (
+ren list_logo.svg revision-logo.svg
+ren modded-logo.svg list_logo.svg
+) else (
+ren list_logo.svg modded-logo.svg
+ren revision-logo.svg list_logo.svg
+)
+pushd ..\..\
+:: Change Favicon
+if exist modded-favicon.ico (
+ren favicon.ico wrapper-favicon.ico
+ren modded-favicon.ico favicon.ico
+) else (
+ren favicon.ico modded-favicon.ico
+ren wrapper-favicon.ico favicon.ico
 )
 goto optionscreen
 
