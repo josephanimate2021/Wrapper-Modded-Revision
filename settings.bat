@@ -121,6 +121,12 @@ if exist "wrapper\pages\img\modded-logo.svg" (
 ) else (
         echo ^(9^) Both The Modded Logo And Favicon Are[92m ON [0m
 )
+:: Change Browser
+if exist "utilities\chromium" (
+        echo ^(10^) The Google Chrome Browser V68 Is[92m ON [0m
+) else (
+        echo ^(10^) The Google Chrome Browser V68 Is[91m OFF [0m
+)
 :: Dev options
 :: These are really specific options that no casual user would ever really need
 if !SHOWDEVOPTIONS!==y (
@@ -273,6 +279,14 @@ if "!choice!"=="?9" (
 	echo When first getting Wrapper: Offline, the revison logo will be used by default.
 	echo if you want this thing modded, you may turn this feature on.
 	echo if you don't want to, it's fine. the modded version of wrapper offline is coming soon anyways.
+	goto reaskoptionscreen
+)
+:: Change Browser
+if "!choice!"=="10" goto browserChange
+if "!choice!"=="?10" (
+	echo When first getting Wrapper: Offline, you will be using google chrome version 68 by default.
+	echo if you want to use ungoogled chromium instead, then you may turn this feature on.
+	echo if you don't want to, it's fine. i am just trying to find browsers that will support flash to those with no admin rights at all.
 	goto reaskoptionscreen
 )
 :: Dev options
@@ -536,6 +550,17 @@ ren modded-favicon.ico favicon.ico
 ) else (
 ren favicon.ico modded-favicon.ico
 ren wrapper-favicon.ico favicon.ico
+)
+goto optionscreen
+
+:browserChange
+pushd utilities
+if exist chromium (
+ren ungoogled-chromium chrome
+ren chromium ungoogled-chromium
+) else (
+ren ungoogled-chromium chromium
+ren chrome ungoogled-chromium
 )
 goto optionscreen
 
