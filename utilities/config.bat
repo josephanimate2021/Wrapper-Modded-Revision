@@ -36,4 +36,3 @@ set AUTOUPDATE=y
 
 :: Allows the chrome browser to be changed
 set USINGINCLUDEDCHROMIUM=n
-
