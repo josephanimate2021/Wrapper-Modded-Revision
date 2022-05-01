@@ -36,3 +36,6 @@ set AUTOUPDATE=y
 
 :: Allows the chrome browser to be changed
 set USINGINCLUDEDCHROMIUM=n
+
+:: Disord RPC. Default: n
+set RPC=n
