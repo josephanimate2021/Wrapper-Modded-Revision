@@ -260,17 +260,26 @@ if "!choice!"=="?7" (
 	goto reaskoptionscreen
 )
 :: Rich prescence
-if "!choice!"=="8" goto rpcchange
+if "!choice!"=="8" (
+	set TOTOGGLE=RPC
+	if !RPC!==y (
+		set TOGGLETO=n
+	) else (
+		set TOGGLETO=y
+	)
+	set CFGLINE=41
+	goto toggleoption
+)
 if "!choice!"=="?8" (
 	echo By default, Discord rich presence is enabled.
-    echo:
+        echo:
 	echo It's used to show when you're using Wrapper: Offline
-    echo in your "Playing A Game" status on Discord, much like
-    echo how lots of modern computer games will show on your
-    echo Discord status when you're playing them.
-    echo:
+        echo in your "Playing A Game" status on Discord, much like
+        echo how lots of modern computer games will show on your
+        echo Discord status when you're playing them.
+        echo:
 	echo Turning this off will make Offline stop saying
-    echo when you're using it on Discord.
+        echo when you're using it on Discord.
 	goto reaskoptionscreen
 )
 :: Change Logo And Favicon
