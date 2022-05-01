@@ -10,11 +10,11 @@ endlocal
 :: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n
 set VERBOSEWRAPPER=y
 
-:: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: n
+:: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: y
 set SKIPCHECKDEPENDS=y
 
-:: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: n
-set SKIPDEPENDINSTALL=n
+:: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: y
+set SKIPDEPENDINSTALL=y
 
 :: Opens Offline in an included copy of ungoogled-chromium. Allows continued use of Flash as modern browsers disable it. Default: y
 set INCLUDEDCHROMIUM=y
@@ -25,7 +25,7 @@ set APPCHROMIUM=y
 :: Opens Offline in a browser of the user's choice. Needs to be a path to a browser executable in quotes. Default: n
 set CUSTOMBROWSER=n
 
-:: Lets the launcher know what browser framework is being used. Mostly used by the Flash installer. Accepts "chrome", "firefox", and "n". Default: n
+:: Lets the launcher know what browser framework is being used. Mostly used by the Flash installer. Accepts "chrome", "firefox", and "n". Default: chrome
 set BROWSER_TYPE=chrome
 
 :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n
