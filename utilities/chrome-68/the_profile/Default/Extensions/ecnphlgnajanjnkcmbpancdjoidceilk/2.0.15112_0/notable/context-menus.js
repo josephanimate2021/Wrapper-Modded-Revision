@@ -1,0 +1,1 @@
+function openInKami(e){const t=new URL(e.linkUrl);t.searchParams.set("referer",e.pageUrl);const n=e.pageUrl.match(/\/c\/.*?\/a\/.*?\//);n&&t.searchParams.set("courseworkAlternateLink",n[0]);const r=t.toString()+"&(open_with_kami)";chrome.tabs.create({url:r})}chrome.contextMenus.create({title:"Open with Kami",contexts:["link"],onclick:openInKami});

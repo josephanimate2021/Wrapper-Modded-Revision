@@ -33,3 +33,7 @@ set DRYRUN=n
 
 :: auto updates wrapper on first start
 set AUTOUPDATE=y
+
+:: Allows the chrome browser to be changed
+set USINGINCLUDEDCHROMIUM=n
+

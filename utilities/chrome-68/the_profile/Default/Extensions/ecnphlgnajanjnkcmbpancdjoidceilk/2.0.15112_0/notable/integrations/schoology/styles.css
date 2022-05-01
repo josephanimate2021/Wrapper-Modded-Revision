@@ -1,0 +1,216 @@
+.kami-drive-viewer-toolstrip-open-and-openwith {
+  position: absolute;
+  top: 72px;
+  right: 22px;
+  padding: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.kami-link {
+  cursor: pointer;
+  font-size: 9px!important;
+  font-weight: normal!important;
+  margin-left: 5px;
+  border-left: 1px solid #c7c7c7;
+  padding-left: 17px;
+  background: url(https://web.kamihq.com/web/images/icon48.png) no-repeat 2px 0;
+  background-size: contain;
+}
+
+.kami-open-button-container {
+  display: inline-block;
+}
+
+.kami-open-button {
+  margin-left: 20px;
+  font-weight: bold !important;
+}
+
+.kami-open-button span {
+    background: url(https://web.kamihq.com/web/images/icon128.png) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    float: left;
+    height: 16px;
+    width: 16px;
+    margin: -1px 7px 0 0;
+}
+
+
+.kami-logo-span {
+    background: url(https://web.kamihq.com/web/images/icon128.png);
+    display: inline-block;
+    float: left;
+    height: 32px;
+    width: 32px;
+    margin: -1px 7px 0 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.kami-overlay {
+  width: 100%;
+  height: 600px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kami-overlay-fullscreen {
+  height: 100%;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+
+.kami-elementary-message {
+  font-size: 30px;
+}
+
+#kami-finished-button {
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    background-color:#4eb5f1;
+    text-align:center;
+    transition: all 0.2s;
+    width: 100px;
+    margin: 0 auto;
+    font-size: 20px;
+  }
+
+#kami-finished-button:hover{
+  background-color:#4095c6;
+}
+
+.kami-overlay div, .kami-overlay h1 {
+  display: block;
+  text-align: center;
+}
+
+#kami-logo {
+  width: 256px;
+  margin: 10px auto;
+}
+
+#kami-status {
+}
+
+.kami-elementary-instructions {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+}
+
+#kami-elementary-manual-submit {
+  text-align: right;
+  cursor: pointer;
+  color: blue;
+}
+
+#kami-progress-bar {
+  width:50%;
+  margin: 20px auto;
+  height: 16px;
+}
+
+.kami-logged-out-dialog {
+  padding: 1em 1em 0;
+}
+
+.kami-logged-out-dialog-login-button {
+  padding: 0.5em;
+  display: block;
+  margin: 0 auto;
+}
+
+
+.s-grade-item-assignment-submission-app[data-app-nid="kami"] {
+  z-index: 20;
+}
+
+.s-grade-item-assignment-submission-app .kami-tooltip {
+  cursor: default;
+  background: #0677ba;
+  bottom: 100%;
+  color: #fff;
+  display: block;
+  left: -65px;
+  margin-bottom: 15px;
+  opacity: 0;
+  padding: 20px;
+  pointer-events: none;
+  position: absolute;
+  width: 200px;
+  transform: translateY(10px);
+  transition: all .25s ease-out;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+}
+
+.s-grade-item-assignment-submission-app .kami-tooltip  a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* This bridges the gap so you can mouse into the tooltip without it disappearing */
+.s-grade-item-assignment-submission-app .kami-tooltip:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}  
+
+/* CSS Triangles - see Trevor's post */
+.s-grade-item-assignment-submission-app .kami-tooltip:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-top: solid #0677ba 10px;
+  bottom: -10px;
+  content: " ";
+  height: 0;
+  left: 50%;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+  
+.s-grade-item-assignment-submission-app:hover .kami-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0px);
+}
+
+.turnin-animation {
+  max-width: 60%;
+  width: 800px;
+  position: absolute;
+  bottom: 0px;
+  z-index: 10000000;
+  pointer-events: none;
+}
+
+.turnin-animation-left {
+  left: 0px;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.turnin-animation-right {
+  right: 0px;
+  -moz-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -webkit-transform: translate3d(0,0,0) scale(-1, 1);
+  transform: translate3d(0,0,0) scale(-1, 1);
+}
