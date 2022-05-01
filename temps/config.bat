@@ -7,7 +7,7 @@ setlocal
 if "%SUBSCRIPT%"=="" ( start notepad.exe config.bat & exit )
 endlocal
 
-:: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n
+:: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: y
 set VERBOSEWRAPPER=y
 
 :: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: y
