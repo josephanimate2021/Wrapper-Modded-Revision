@@ -1,6 +1,8 @@
 :: Wrapper: Offline Launcher
 :: Author: benson#0411
 :: License: MIT
+@echo off
+:restart
 :: Lets variables work or something idk im not a nerd
 SETLOCAL ENABLEDELAYEDEXPANSION
 :: Peform config measurements before calling it in.
@@ -15,8 +17,8 @@ title Wrapper: Offline v%WRAPPER_VER% [Initializing...]
 :: Initialization ::
 ::::::::::::::::::::
 
-:: Stop commands from spamming stuff, cleans up the screen
-@echo off && cls
+:: cleans up the screen
+cls
 
 :: check for updates
 
@@ -87,8 +89,8 @@ echo Settings are missing for some reason?
 echo Restoring...
 goto configcopy
 :returnfromconfigcopy
-if not exist utilities\config.bat ( echo Something is horribly wrong. You may be in a read-only system/admin folder. & pause & exit )
-call utilities\config.bat
+if not exist utilities\config.bat ( echo Something is horribly wrong. You may be in a read-only system/admin folder. & pause & exit ) else ( call utilities\config.bat )
+goto restart
 :configavailable
 
 ::::::::::::::::::::::
@@ -1054,41 +1056,7 @@ echo g r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 goto grr
 
 :configcopy
+cd %USERPROFILE%\Downloads\Wrapper-Modded-Revision
 if not exist utilities ( md utilities )
-echo :: Wrapper: Offline Config>> utilities\config.bat
-echo :: This file is modified by settings.bat. It is not organized, but comments for each setting have been added.>> utilities\config.bat
-echo :: You should be using settings.bat, and not touching this. Offline relies on this file remaining consistent, and it's easy to mess that up.>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Opens this file in Notepad when run>> utilities\config.bat
-echo setlocal>> utilities\config.bat
-echo if "%%SUBSCRIPT%%"=="" ( pushd "%~dp0" ^& start notepad.exe config.bat ^& exit )>> utilities\config.bat
-echo endlocal>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n>> utilities\config.bat
-echo set VERBOSEWRAPPER=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: n>> utilities\config.bat
-echo set SKIPCHECKDEPENDS=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: n>> utilities\config.bat
-echo set SKIPDEPENDINSTALL=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Opens Offline in an included copy of ungoogled-chromium. Allows continued use of Flash as modern browsers disable it. Default: y>> utilities\config.bat
-echo set INCLUDEDCHROMIUM=y>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Opens INCLUDEDCHROMIUM in headless mode. Looks pretty nice. Overrides CUSTOMBROWSER and BROWSER_TYPE. Default: y>> utilities\config.bat
-echo set APPCHROMIUM=y>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Opens Offline in a browser of the user's choice. Needs to be a path to a browser executable in quotes. Default: n>> utilities\config.bat
-echo set CUSTOMBROWSER=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Lets the launcher know what browser framework is being used. Mostly used by the Flash installer. Accepts "chrome", "firefox", and "n". Default: n>> utilities\config.bat
-echo set BROWSER_TYPE=chrome>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n>> utilities\config.bat
-echo set DRYRUN=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: auto updates wrapper on first start>> utilities\config.bat
-echo set AUTOUPDATE=y>> utilities\config.bat
-echo:>> utilities\config.bat
+copy temps\config.bat utilities
 goto returnfromconfigcopy
