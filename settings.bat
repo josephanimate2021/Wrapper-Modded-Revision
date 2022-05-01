@@ -110,7 +110,7 @@ if exist "wrapper\_THEMES\themelist-allthemes.xml" (
 	echo ^(7^) Truncated themelist is[91m OFF [0m
 )
 :: Discord RPC
-if !RPC!==y (
+if exist wrapper\main-norpc.js (
 	echo ^(8^) Discord rich prescence is[92m ON [0m
 ) else ( 
 	echo ^(8^) Discord rich prescence is[91m OFF [0m
@@ -261,14 +261,16 @@ if "!choice!"=="?7" (
 )
 :: Rich prescence
 if "!choice!"=="8" (
-	set TOTOGGLE=RPC
-	if !RPC!==y (
-		set TOGGLETO=n
-	) else (
-		set TOGGLETO=y
-	)
-	set CFGLINE=41
-	goto toggleoption
+        echo Toggling Setting...
+        pushd wrapper
+	if exist main-norpc.js (
+                ren main.js main-rpc.js
+                ren main-norpc.js main.js
+        ) else (
+                ren main.js main-norpc.js
+                ren main-rpc.js main.js
+        )
+        goto optionscreen
 )
 if "!choice!"=="?8" (
 	echo By default, Discord rich presence is enabled.
