@@ -830,11 +830,11 @@ goto wrapperidle
 if !INCLUDEDCHROMIUM!==n (
 	if !CUSTOMBROWSER!==n (
 		echo Opening the server page in your default browser...
-		if !DRYRUN!==n ( start http://localhost:4343 )
+		if !DRYRUN!==n ( start https://localhost:4664 )
 	) else (
 		echo Opening the server page in your set browser...
 		echo If this does not work, you may have set the path wrong.
-		if !DRYRUN!==n ( start !CUSTOMBROWSER! http://localhost:4343 )
+		if !DRYRUN!==n ( start !CUSTOMBROWSER! https://localhost:4664 )
 	)
 ) else (
         if !USINGINCLUDEDCHROMIUM!==n ( set BROWSER=Google Chrome Version 68 ) else ( set BROWSER=included Chromium )
@@ -842,17 +842,17 @@ if !INCLUDEDCHROMIUM!==n (
         if !USINGINCLUDEDCHROMIUM!==n (
         pushd utilities\chrome-68
 	if !APPCHROMIUM!==y (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 )
+		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=https://localhost:4664 )
 	) else (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 )
+		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile https://localhost:4664 )
 	)
 	popd
         ) else (
 	pushd utilities\ungoogled-chromium
 	if !APPCHROMIUM!==y (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=http://localhost:4343 )
+		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile --app=https://localhost:4664 )
 	) else (
-		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile http://localhost:4343 )
+		if !DRYRUN!==n ( start chrome.exe --allow-outdated-plugins --user-data-dir=the_profile https://localhost:4664 )
 	)
 	popd
      )
