@@ -542,24 +542,25 @@ goto toggleoption
 :: Change Wrapper Logo And Favicon ::
 :::::::::::::::::::::::::::::::::::::
 :extractchars
+echo Toggling setting...
 pushd wrapper\pages\img
-:: Change Logo
-if exist modded-logo.svg (
-ren list_logo.svg revision-logo.svg
-ren modded-logo.svg list_logo.svg
-) else (
-ren list_logo.svg modded-logo.svg
-ren revision-logo.svg list_logo.svg
+if exist "modded-logo.svg" (
+	ren list_logo.svg revision-logo.svg
+	ren modded-logo.svg list_logo.svg
+) else ( 
+	ren list_logo.svg modded-logo.svg
+	ren revision-logo.svg list_logo.svg
 )
-pushd ..\..\
-:: Change Favicon
-if exist modded-favicon.ico (
-ren favicon.ico wrapper-favicon.ico
-ren modded-favicon.ico favicon.ico
-) else (
-ren favicon.ico modded-favicon.ico
-ren wrapper-favicon.ico favicon.ico
+pushd %USERPROFILE%\Downloads\Wrapper-Modded-Revision\wrapper
+if exist "modded-favicon.ico" (
+	ren favicon.ico wrapper-favicon.ico
+	ren modded-favicon.ico favicon.ico
+) else ( 
+	:: enable
+	ren favicon.ico modded-favicon.ico
+	ren wrapper-favicon.ico favicon.ico
 )
+popd
 goto optionscreen
 
 :end
