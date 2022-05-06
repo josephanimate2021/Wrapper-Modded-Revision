@@ -59,7 +59,7 @@ echo Time to choose. && goto wrapperidle
 cls
 pushd "%~dp0"
 echo Pulling repository from GitHub...
-git pull
+git pull || git stash & git pull
 cls
 echo Wrapper: Offline has been updated^^!
 start "" "%~dp0"
