@@ -124,7 +124,7 @@
 			const tbl = json[c];
 			const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 			tbody.insertAdjacentHTML("beforeend",
-				`<tr><td><img src="/movie_thumbs/${tbl.id}"></td><td><div>${tbl.title}</div><div>${tbl.durationString}</div></div></td><td><span>${date.match(/./g).join('</span><span>')}</span></td><td><a href="javascript:;" onclick="popup('${tbl.id}')"></a><a href="/go_full?movieId=${tbl.id}"></a><a href="/movies/${tbl.id}.xml" download="${tbl.title}"></a></td></tr>`);
+				`<tr id="${tbl.id}"><td><img src="/movie_thumbs/${tbl.id}"></td><td><div>${tbl.title}</div><div>${tbl.durationString}</div></div></td><td><span>${date.match(/./g).join('</span><span>')}</span></td><td><a href="javascript:;" onclick="popup('${tbl.id}')"></a><a href="/go_full?movieId=${tbl.id}"></a><a href="/movies/${tbl.id}.xml" download="${tbl.title}"></a><a href="javascript:;" onclick="deleteMovie('${tbl.id}')"></td></tr>`);
 		}
 	}
 
@@ -137,6 +137,13 @@
 
 	function popup(id) {
 		window.open('/player?movieId=' + id, 'MsgWindow', 'width=1280,height=720,left=' + (screen.width / 2 - 640) + ',top=' + (screen.height / 2 - 360));
+	}
+	
+	function deleteMovie(id) {
+		const xhttp = new XMLHttpRequest();
+		xhttp.open("POST", `/ajax/deleteMovie/?movieId=${id}`);
+		xhttp.send();
+		document.getElementById(`${id}`).style.display = "none";
 	}
 </script>
 
