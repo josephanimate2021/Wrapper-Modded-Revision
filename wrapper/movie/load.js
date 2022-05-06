@@ -51,11 +51,16 @@ module.exports = function (req, res, url) {
 					res.setHeader("Content-Type", "application/zip");
 					process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
-					movie // try movie
-						.delete(url.query.movieId)
+					movie.delete(url.query.movieId)
 						.catch(err => { // error
 						if (process.env.NODE_ENV == "dev") throw err;
 						console.error("Error deleting movie: " + err)
+						res.end("1")
+					});
+                                        movie.deleteThumb(url.query.movieId)
+						.catch(err => { // error
+						if (process.env.NODE_ENV == "dev") throw err;
+						console.error("Error deleting a movie thumb: " + err)
 						res.end("1")
 					});
 					return true;

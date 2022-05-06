@@ -42,10 +42,17 @@ module.exports = {
 	delete(mId) {
 		return new Promise((res, rej) => {
 			let filePath = `${folder}/${mId}.xml`;
-			let thumbPath = `${folder}/${mId}.png`;
-			if (!fs.existsSync(filePath, thumbPath)) rej("Movie doesn't exist.");
+			if (!fs.existsSync(filePath)) rej("Movie doesn't exist.");
 
-			fs.unlinkSync(filePath, thumbPath);
+			fs.unlinkSync(filePath);
+		});
+	},
+        deleteThumb(mId) {
+		return new Promise((res, rej) => {
+			let filePath = `${folder}/${mId}.png`;
+			if (!fs.existsSync(filePath)) rej("Movie thumb doesn't exist.");
+
+			fs.unlinkSync(filePath);
 		});
 	},
 	loadXml(movieId) {
