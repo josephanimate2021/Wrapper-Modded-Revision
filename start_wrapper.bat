@@ -27,7 +27,7 @@ if !AUTOUPDATE!==y (
 	pushd "%~dp0"
 	if exist .git (
 		echo Updating...
-		call utilities\PortableGit\bin\git.exe pull
+		call utilities\PortableGit\bin\git.exe pull || call utilities\PortableGit\bin\git.exe stash & call utilities\PortableGit\bin\git.exe pull
 		PING -n 3 127.0.0.1>nul
 		cls
 	) else (
