@@ -39,6 +39,15 @@ module.exports = {
 			parse.packXml(buffer, mId).then(v => res(v));
 		});
 	},
+	delete(mId) {
+		return new Promise((res, rej) => {
+			let filePath = `${folder}/${mId}.xml`;
+			let thumbPath = `${folder}/${mId}.png`;
+			if (!fs.existsSync(filePath, thumbPath)) rej("Movie doesn't exist.");
+
+			fs.unlinkSync(filePath, thumbPath);
+		});
+	},
 	loadXml(movieId) {
 		return new Promise((res, rej) => {
 			const i = movieId.indexOf('-');
