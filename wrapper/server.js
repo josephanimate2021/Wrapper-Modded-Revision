@@ -61,7 +61,6 @@ const functions = [
 	tsv,
 	tsl,
 	wal,
-	stu,
 	was
 ];
 
