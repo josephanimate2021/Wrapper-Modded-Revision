@@ -23,7 +23,8 @@ pushd ..\wrapper
 :: set environment variables
 set DISCORD_RPC=%RPC%
 :: start wrapper
-npm start
+title Node.js Has Started.
+node main.js
 
 :: this only happens if node crashes
 echo:
