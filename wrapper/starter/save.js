@@ -6,9 +6,9 @@ const loadPost = require("../request/post_body");
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST") {
-		loadPost(req, res).then(data => {
-			switch (url.path) {
-				case "/goapi/saveTemplate/": {
+		switch (url.path) {
+			case "/goapi/saveTemplate/": {
+				loadPost(req, res).then(data => {
 					var body = Buffer.from(data.body_zip, "base64");
 					var thumb = Buffer.from(data.thumbnail_large, "base64");
 					var id = data.movieId || null;
@@ -29,8 +29,10 @@ module.exports = function (req, res, url) {
 						console.error("Error saving starter: " + err)
 						res.end("1")
 					});
-				}
-				case "/upload_starter": {
+				});
+			}
+			case "/upload_starter": {
+				loadPost(req, res).then(data => {
 					const body = Buffer.from(data.body_zip, "base64");
 					const thumb = Buffer.from(data.thumbnail_large, "base64");
 					const id = data.movieId || null;
@@ -57,9 +59,11 @@ module.exports = function (req, res, url) {
 					res.statusCode = 302;
 					res.setHeader("Location", url);
 					res.end();
-				}
+				});
 			}
-		});
+		}
+	} else {
+		return;
 	}
 	return true;
 }
