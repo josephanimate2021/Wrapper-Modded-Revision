@@ -25,6 +25,12 @@ set DISCORD_RPC=%RPC%
 :: start wrapper
 title Node.js Has Started.
 node main.js
+:: loop starting wrapper over and over again no matter how much errors it gets.
+goto start_wrapper
+:start_wrapper
+node main.js
+:: loop starting wrapper over and over again no matter how much errors it gets.
+goto start_wrapper
 
 :: this only happens if node crashes
 echo:
