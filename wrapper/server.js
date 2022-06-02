@@ -20,7 +20,6 @@ const pmc = require("./character/premade");
 const chl = require("./character/load");
 const chs = require("./character/save");
 const chu = require("./character/upload");
-const stu = require("./starter/upload");
 const sts = require("./starter/save");
 const Stl = require("./static/load");
 const Stp = require("./static/page");
@@ -61,7 +60,6 @@ const functions = [
 	tsv,
 	tsl,
 	wal,
-	stu,
 	was
 ];
 
