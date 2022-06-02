@@ -27,7 +27,7 @@ if !AUTOUPDATE!==y (
 	pushd "%~dp0"
 	if exist .git (
 		echo Updating...
-		call utilities\PortableGit\bin\git.exe pull || call utilities\PortableGit\bin\git.exe stash && call utilities\PortableGit\bin\git.exe pull
+		call utilities\PortableGit\bin\git.exe pull || echo Updating Wrapper Has Failed! Attempting To Reset On Whatever went wrong. && call utilities\PortableGit\bin\git.exe stash && call utilities\PortableGit\bin\git.exe pull || echo Reseting The Updater has failed! This is an auto updater. so you will just have to do this in an seperete window while wrapper keeps on starting up. && start "" /wait /B "%~F0" point_insertion
 		PING -n 3 127.0.0.1>nul
 		cls
 	) else (
