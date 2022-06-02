@@ -59,7 +59,7 @@ echo Time to choose. && goto wrapperidle
 cls
 pushd "%~dp0"
 echo Pulling repository from GitHub...
-git pull || git stash && git pull
+git pull || echo Updating Wrapper Has Failed! Attempting To Reset On Whatever went wrong. && git stash && git pull || echo Updating has still failed! Please enter the commands listed above to resolve this updating issue. && call cmd.exe
 cls
 echo Wrapper: Offline has been updated^^!
 start "" "%~dp0"
