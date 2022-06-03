@@ -405,9 +405,9 @@ module.exports = {
 		const end = xml.lastIndexOf('</thumb>');
 		if (beg > -1 && end > -1) {
 			const sub = Buffer.from(xml.subarray(beg + 7, end).toString(), 'base64');
-			fs.writeFileSync(fUtil.getFileIndex('thumb-', '.png', id), sub);
+			fs.writeFileSync(fUtil.getFileIndex(`${id}.png`), sub);
 		}
-		fs.writeFileSync(fUtil.getFileIndex('movie-', '.xml', id), xml);
+		fs.writeFileSync(fUtil.getFileIndex(`${id}.xml`), xml);
 	},
 	async unpackCharXml(xml, id) {
 		fs.writeFileSync(fUtil.getFileIndex('char-', '.xml', id), xml);
