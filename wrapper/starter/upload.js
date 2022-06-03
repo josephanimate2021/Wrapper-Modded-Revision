@@ -8,7 +8,7 @@ function createId() {
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/upload_starter") return;
 	const id = createId();
-	const url = `https://josephanimate2021.github.io/Vyond-Legacy-Offline/utilities/offline-redirect-helper/starterUploaded?returnMessage=Your Starter Could Not Be Uploaded! Id: ${id}`;
+	const url = `https://josephanimate2021.github.io/Vyond-Legacy-Offline/utilities/offline-redirect-helper/starterUploadFailed`;
 	res.statusCode = 302;
 	res.setHeader("Location", url);
 	res.end();
