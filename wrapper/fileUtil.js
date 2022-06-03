@@ -78,7 +78,7 @@ module.exports = {
 	 * @returns {string}
 	 */
 	getFileString(s, suf = '.xml', name) {
-		return `${folder}/${s}${name}${suf}`;
+		return `${folder}/${name}${suf}`;
 	},
 	/**
 	 * @param {string} s
