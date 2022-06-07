@@ -409,9 +409,9 @@ module.exports = {
 			const id = fUtil.generateId();
 			if (beg > -1 && end > -1) {
 				const sub = Buffer.from(xml.subarray(beg + 7, end).toString(), 'base64');
-				fs.writeFileSync(`${folder}/${id}.png`), sub);
+				fs.writeFileSync(`${folder}/${id}.png`, sub);
 			}
-			fs.writeFileSync(`${folder}/${id}.xml`), xml);
+			fs.writeFileSync(`${folder}/${id}.xml`, xml);
 			const url = `/go_full?movieId=${id}`;
 			res.setHeader('Location', url);
 		});
