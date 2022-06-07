@@ -401,15 +401,19 @@ module.exports = {
 	 * @param {number} id 
 	 */
 	async unpackXml(xml, id) {
-		const beg = xml.lastIndexOf('<thumb>');
-		const end = xml.lastIndexOf('</thumb>');
-		if (beg > -1 && end > -1) {
-			const sub = Buffer.from(xml.subarray(beg + 7, end).toString(), 'base64');
-			fs.writeFileSync(fUtil.getFileIndex(`${id}.png`), sub);
-		}
-		fs.writeFileSync(fUtil.getFileIndex(`${id}.xml`), xml);
-	},
-	async unpackCharXml(xml, id) {
-		fs.writeFileSync(fUtil.getFileIndex('char-', '.xml', id), xml);
+		return new Promise((res, rej) => {
+			const dot = ".";
+			const folder = `${dot}${process.env.SAVED_FOLDER}`;
+			const beg = xml.lastIndexOf('<thumb>');
+			const end = xml.lastIndexOf('</thumb>');
+			const id = fUtil.generateId();
+			if (beg > -1 && end > -1) {
+				const sub = Buffer.from(xml.subarray(beg + 7, end).toString(), 'base64');
+				fs.writeFileSync(`${folder}/${id}.png`), sub);
+			}
+			fs.writeFileSync(`${folder}/${id}.xml`), xml);
+			const url = `/go_full?movieId=${id}`;
+			res.setHeader('Location', url);
+		});
 	},
 }
