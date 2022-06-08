@@ -29,7 +29,6 @@ function showImporter() {
 			importer.show();
 			if (!importer.data("importer"))
 				importer.data("importer", new AssetImporter(importer))
-			studio.openYourLibrary();
 		}
 	}
 	return true;
@@ -199,13 +198,13 @@ class ImporterFile {
 		var name = passedname;
 		if (name == "")
 			name = "unnamed" + Math.random().toString().substring(2, 8);
-		studio[0].importerStatus("processing");
 
 		var b = new FormData();
 		b.append("import", this.file);
 		b.append("name", name)
 		b.append("type", type.type);
 		b.append("subtype", type.subtype);
+		studio[0].importerStatus("processing");
 		$.ajax({
 			url: "/api/asset/upload",
 			method: "POST",
@@ -213,9 +212,7 @@ class ImporterFile {
 			processData: false,
 			contentType: false,
 			dataType: "json"
-		}).done(d => {
-			studio[0].importerStatus("done");
-			this.el.fadeOut(() => this.el.remove())
-		}).catch(e => console.error("Import failed."))
+		});
+		studio[0].importerStatus("done");
 	}
 }
