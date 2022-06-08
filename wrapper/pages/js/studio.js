@@ -198,7 +198,9 @@ class ImporterFile {
 	async upload(passedname, type) {
 		var name = passedname;
 		if (name == "")
-			name = "unnamed" + Math.random().toString().substring(2, 8); 
+			name = "unnamed" + Math.random().toString().substring(2, 8);
+		studio[0].importerStatus("processing");
+
 		var b = new FormData();
 		b.append("import", this.file);
 		b.append("name", name)
