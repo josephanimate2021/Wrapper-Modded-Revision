@@ -28,7 +28,7 @@ function showImporter() {
 			importerVisible = true;
 			importer.show();
 			if (!importer.data("importer"))
-				importer.data("importer", new AssetImporter(importer))
+				importer.data("importer", new AssetImporter(importer));
 		}
 	}
 	return true;
@@ -37,30 +37,24 @@ function hideImporter() {
 	importerVisible = false;
 	importer.hide();
 }
-function initPreviewPlayer(dataXmlStr, startFrame) {
+function initPreviewPlayer(dataXmlStr, startFrame, containsChapter, themeList) {
 	movieDataXmlStr = dataXmlStr;
-
 	filmXmlStr = dataXmlStr.split("<filmxml>")[1].split("</filmxml>")[0];
-
-	if (typeof startFrame == 'undefined') {
-		startFrame = 1;
-	} else {
-		startFrame = Math.max(1, parseInt(startFrame));
-	}
-
-	previewer.css("display", "block");
-
 	hideImporter(); // hide importer before previewing
-	
-
-	document.getElementById('preview_player').innerHTML = `
-	<object data="https://localhost:4664/animation/414827163ad4eb60/player.swf" type="application/x-shockwave-flash" width="800" height="450">
-	<param name="flashvars" value="apiserver=/&amp;isEmbed=1&amp;tlang=en_US&amp;isInitFromExternal=1&amp;startFrame=${startFrame}&amp;autostart=1&amp;storePath=https://localhost:4664/store/3a981f5cb2739137/&lt;store&gt;&amp;clientThemePath=https://localhost:4664/static/ad44370a650793d9/&lt;client_theme&gt;" />
-	<param name="allowScriptAccess" value="always" />
-	<param name="allowFullScreen" value="true" />
-	</object>`;
-	
-	studio.css("height", "0");
+	// update flashvars
+	const flashvars = new URLSearchParams({
+		apiserver: "/",
+		isEmbed: 1,
+		tlang: "en_US",
+		isInitFromExternal: 1,
+		startFrame: startFrame,
+		autostart: 1,
+		storePath: STORE_URL + "/<store>",
+		clientThemePath: CLIENT_URL + "/<client_theme>",
+	}).toString();
+	previewer.find("object param[name='flashvars']").attr("value", flashvars);
+	previewer.css("display", "block");
+	studio.css("height", "1px");
 }
 function retrievePreviewPlayerData() { return movieDataXmlStr }
 function hidePreviewer() {
@@ -104,11 +98,10 @@ class AssetImporter {
 		})
 	}
 	addFiles(file) { //adds a file to the queue
-		//image importing
 		const ext = file.name.substring(file.name.lastIndexOf(".") + 1);
 		const maxsize = this.config.maxsize;
 		if (maxsize && file.size > maxsize) return; // check if file is too large
-		var validFileType = false;
+		let validFileType = false;
 		let el;
 		switch (ext) {
 			case "mp3":
@@ -127,11 +120,13 @@ class AssetImporter {
 							<a href="#" type="bgmusic">Music</a>
 							<a href="#" type="soundeffect">Sound effect</a>
 							<a href="#" type="voiceover">Voiceover</a>
+							<a href="#" action="cancel">Cancel</a>
 						</div>
 					</div>
-				`).appendTo(this.queue);
+				`.trim()).appendTo(this.queue);
 				break;
 			}
+			case "swf":
 			case "jpg":
 			case "png": {
 				validFileType = true;
@@ -147,14 +142,10 @@ class AssetImporter {
 						<div class="import_as">
 							<a href="#" type="bg">Background</a>
 							<a href="#" type="prop">Prop</a>
+							<a href="#" action="cancel">Cancel</a>
 						</div>
 					</div>
-				`).appendTo(this.queue);
-				const fr = new FileReader();
-				fr.addEventListener("load", e => {
-					el.find("img").attr("src", e.target.result);
-				})
-				fr.readAsDataURL(file);
+				`.trim()).appendTo(this.queue);
 				break;
 			}
 		}
@@ -173,12 +164,45 @@ class ImporterFile {
 		this.initialize();
 	}
 	initialize() {
-		this.el.find("[type]").on("click", (event) => {
+		this.el.find("[type]").on("click", async event => {
 			const el = $(event.target);
 			const type = el.attr("type");
-			const t = this.typeFickser(type);
-			const name = $(event.target).parents('.importer_asset').find('.asset_name').text();
-			this.upload(name.replace(/\s/g, '_'), t);
+			let t = this.typeFickser(type);
+
+			if (t.type == "prop") {
+				// wait for the prop type to be selected
+				await new Promise((resolve, reject) => {
+					this.el.find(".import_as").html(`
+						<a href='#' ptype='holdable'>Handheld</a>
+						<a href='#' ptype='wearable'>Headgear</a>
+						<a href='#' ptype='placeable'>Other Prop</a>
+						<a href="#" action="cancel">Close</a>
+					`.trim());
+					this.el.on("click", "[ptype]", event => {
+						const el = $(event.target);
+						t.ptype = el.attr("ptype");
+						resolve();
+					});
+				});
+			}
+
+			// get the title
+			let name = this.el.find(".asset_name").text();
+			this.upload(name, t);
+		});
+		this.el.on("click", "[action]", event => {
+			const el = $(event.target);
+			const action = el.attr("action");
+
+			switch (action) {
+				case "add-to-scene": {
+					studio[0].importerAddAsset(this.meta.type, this.meta.id);
+					break;
+				} case "cancel": {
+					this.el.fadeOut(() => this.el.remove());
+					break;
+				}
+			}
 		});
 	}
 	typeFickser(type) {
@@ -187,24 +211,25 @@ class ImporterFile {
 			case "soundeffect":
 			case "voiceover": {
 				return { type: "sound", subtype: type };
-			}
-			case "bg":
-			case "prop": {
+			} default: {
 				return { type: type, subtype: 0 };
 			}
 		}
 	}
-	async upload(passedname, type) {
-		var name = passedname;
+	upload(passedname, type) {
+		let name = passedname;
 		if (name == "")
 			name = "unnamed" + Math.random().toString().substring(2, 8);
 
-		var b = new FormData();
+		// set the importer icon
+		studio[0].importerStatus("processing");
+
+		let b = new FormData();
 		b.append("import", this.file);
 		b.append("name", name)
 		b.append("type", type.type);
 		b.append("subtype", type.subtype);
-		studio[0].importerStatus("processing");
+		b.append("ptype", type.ptype || "");
 		$.ajax({
 			url: "/api/asset/upload",
 			method: "POST",
@@ -212,7 +237,30 @@ class ImporterFile {
 			processData: false,
 			contentType: false,
 			dataType: "json"
-		});
-		studio[0].importerStatus("done");
+		})
+			.done(d => {
+				if (d.status == "ok") {
+					this.meta = d.data;
+
+					// alert the studio
+					studio[0].importerStatus("done");
+					studio[0].importerUploadComplete(type.type, d.data.id, d.data);
+
+					// update html
+					if (type.subtype == 0) {
+						if (this.ext != "swf") 
+							this.el.find("img").attr("src", `/assets/${d.data.id}`);
+						// change the subtypes to an add to scene button
+						this.el.find(".import_as").html(`
+							<a href='#' action='add-to-scene'>Add to scene</a>
+							<a href="#" action="cancel">Close</a>
+						`.trim());
+						return;
+					}
+				} else alert("Error importing asset.");
+				// remove element
+				this.el.fadeOut(() => this.el.remove());
+			})
+			.catch(e => console.error("Import failed. Error: " + e))
 	}
 }
