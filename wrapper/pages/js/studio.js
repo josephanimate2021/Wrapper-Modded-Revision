@@ -164,45 +164,12 @@ class ImporterFile {
 		this.initialize();
 	}
 	initialize() {
-		this.el.find("[type]").on("click", async event => {
+		this.el.find("[type]").on("click", (event) => {
 			const el = $(event.target);
 			const type = el.attr("type");
-			let t = this.typeFickser(type);
-
-			if (t.type == "prop") {
-				// wait for the prop type to be selected
-				await new Promise((resolve, reject) => {
-					this.el.find(".import_as").html(`
-						<a href='#' ptype='holdable'>Handheld</a>
-						<a href='#' ptype='wearable'>Headgear</a>
-						<a href='#' ptype='placeable'>Other Prop</a>
-						<a href="#" action="cancel">Close</a>
-					`.trim());
-					this.el.on("click", "[ptype]", event => {
-						const el = $(event.target);
-						t.ptype = el.attr("ptype");
-						resolve();
-					});
-				});
-			}
-
-			// get the title
-			let name = this.el.find(".asset_name").text();
-			this.upload(name, t);
-		});
-		this.el.on("click", "[action]", event => {
-			const el = $(event.target);
-			const action = el.attr("action");
-
-			switch (action) {
-				case "add-to-scene": {
-					studio[0].importerAddAsset(this.meta.type, this.meta.id);
-					break;
-				} case "cancel": {
-					this.el.fadeOut(() => this.el.remove());
-					break;
-				}
-			}
+			const t = this.typeFickser(type);
+			const name = $(event.target).parents('.importer_asset').find('.asset_name').text();
+			this.upload(name.replace(/\s/g, '_'), t);
 		});
 	}
 	typeFickser(type) {
@@ -229,7 +196,6 @@ class ImporterFile {
 		b.append("name", name)
 		b.append("type", type.type);
 		b.append("subtype", type.subtype);
-		b.append("ptype", type.ptype || "");
 		$.ajax({
 			url: "/api/asset/upload",
 			method: "POST",
